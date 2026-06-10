@@ -1,0 +1,26 @@
+# Static analysis configuration.
+#
+# NOTE on riverpod_lint: it is intentionally NOT enabled. Under this Flutter
+# SDK's `meta 1.17` pin, riverpod_lint's only resolvable versions require
+# `freezed_annotation ^2.x`, which conflicts with the `freezed 3.x` we use to
+# kill model boilerplate. We chose freezed 3.x over the lint plugin. Re-add
+# riverpod_lint once the SDK's analyzer/meta ceiling rises and the two are
+# compatible again.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    # freezed + json_serializable place annotations on generated members; this
+    # warning is expected and noisy. Silence it project-wide.
+    invalid_annotation_target: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "lib/generated_plugin_registrant.dart"
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    directives_ordering: true
+    unawaited_futures: true
